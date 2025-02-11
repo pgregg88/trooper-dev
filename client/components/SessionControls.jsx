@@ -7,7 +7,6 @@ function SessionStopped({ startSession }) {
 
   function handleStartSession() {
     if (isActivating) return;
-
     setIsActivating(true);
     startSession();
   }
@@ -16,10 +15,10 @@ function SessionStopped({ startSession }) {
     <div className="flex items-center justify-center w-full h-full">
       <Button
         onClick={handleStartSession}
-        className={isActivating ? "bg-gray-600" : "bg-red-600"}
-        icon={<CloudLightning height={16} />}
+        className={isActivating ? "bg-[#1a1f25]" : "bg-[#1a1f25] hover:bg-[#2a3543]"}
+        icon={<CloudLightning height={16} className="text-[#4af626] opacity-50" />}
       >
-        {isActivating ? "starting session..." : "start session"}
+        {isActivating ? "connecting..." : "connect"}
       </Button>
     </div>
   );
@@ -43,7 +42,7 @@ function SessionActive({ stopSession, sendTextMessage }) {
         }}
         type="text"
         placeholder="send a text message..."
-        className="border border-gray-200 rounded-full p-4 flex-1"
+        className="flex-1 bg-[#0d1117] text-[#4af626] border border-[#4af626] border-opacity-20 p-4 rounded-none font-sans text-base tracking-wider placeholder:text-[#4af626] placeholder:opacity-30 focus:outline-none focus:border-opacity-50"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
@@ -53,12 +52,16 @@ function SessionActive({ stopSession, sendTextMessage }) {
             handleSendClientEvent();
           }
         }}
-        icon={<MessageSquare height={16} />}
-        className="bg-blue-400"
+        icon={<MessageSquare height={18} className="text-[#4af626] opacity-50" />}
+        className="bg-[#1a1f25] hover:bg-[#2a3543]"
       >
         send text
       </Button>
-      <Button onClick={stopSession} icon={<CloudOff height={16} />}>
+      <Button 
+        onClick={stopSession} 
+        icon={<CloudOff height={18} className="text-[#4af626] opacity-50" />}
+        className="bg-[#1a1f25] hover:bg-[#2a3543]"
+      >
         disconnect
       </Button>
     </div>
@@ -74,7 +77,7 @@ export default function SessionControls({
   isSessionActive,
 }) {
   return (
-    <div className="flex gap-4 border-t-2 border-gray-200 h-full rounded-md">
+    <div className="flex gap-4 h-full">
       {isSessionActive ? (
         <SessionActive
           stopSession={stopSession}

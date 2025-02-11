@@ -7,8 +7,19 @@ https://tailwindcss.com/docs/preflight
 @tailwind utilities;
 
 :root {
-  --color-base: #efefef;
-  --color-highlight: #ff80ff;
+  --color-base: #000000;
+  --color-primary: #4af626;  /* Bright terminal green */
+  --color-accent: #2a3543;
+  --color-secondary: #1a1f25;
+  --color-text: #4af626;     /* Matching text color */
+  --color-border: #2a3543;
+  --color-terminal: #0d1117;
+  --color-dim: rgba(74, 246, 38, 0.5);  /* Dimmed version of the green */
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
 }
 
 html,
@@ -18,7 +29,41 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: "Consolas", "Andale Mono", monospace;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--color-terminal);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Imperial theme additions */
+.imperial-panel {
+  background-color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+}
+
+.imperial-text {
+  color: var(--color-primary);
+  text-transform: none;
+  letter-spacing: 0.05em;
   font-size: 0.9rem;
-  background-color: var(--color-base);
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.terminal-line {
+  padding: 10px 14px;
+  background-color: var(--color-secondary);
+  border-left: 2px solid var(--color-accent);
+  margin: 2px 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+/* Add a subtle glow effect to the text */
+.glow {
+  text-shadow: 0 0 4px rgba(74, 246, 38, 0.2);
 }

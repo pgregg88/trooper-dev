@@ -1,0 +1,45 @@
+---
+description: Project Must Follow Rules
+globs: ./*
+---
+# Mode: PLAN
+
+Here are the key points we should follow when making any changes:
+
+1. Token Generation (server.js):
+```javascript
+// MUST KEEP:
+- Endpoint: "https://api.openai.com/v1/realtime/sessions"
+- Model: "gpt-4o-realtime-preview-2024-12-17"
+- Voice: "verse"
+- Simple response handling: res.json(data)
+```
+
+2. WebRTC Setup (App.jsx):
+```javascript
+// MUST KEEP:
+- Simple RTCPeerConnection creation without extra config
+- Basic audio setup: audio: true
+- Standard data channel name: "oai-events"
+- Exact SDP negotiation flow
+```
+
+3. Core Event Structure:
+```javascript
+// MUST KEEP:
+- conversation.item.create for messages
+- response.create for model responses
+- Exact event format for messages
+```
+
+Rules for Future Changes:
+1. Don't modify the core WebRTC setup that's working
+2. Don't add extra configuration unless explicitly needed
+3. Keep the simple audio configuration
+4. Maintain the exact event formats
+5. Test any changes in a separate branch first
+
+Would you like me to:
+1. Create a checklist for safe changes?
+2. Document the current working configuration?
+3. Set up validation to prevent breaking changes?
