@@ -7,4 +7,7 @@ const path = fileURLToPath(import.meta.url);
 export default {
   root: join(dirname(path), "client"),
   plugins: [react()],
+  define: {
+    'process.env.ENABLE_STORMTROOPER_AUDIO': JSON.stringify(process.env.ENABLE_STORMTROOPER_AUDIO)
+  }
 };

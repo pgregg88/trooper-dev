@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import imperialLogo from "/assets/Imperial_Emblem.svg";
 import EventLog from "./EventLog";
 import SessionControls from "./SessionControls";
+import { AudioProcessor } from "../audioProcessor";
 
 export default function App() {
   const [isSessionActive, setIsSessionActive] = useState(false);
@@ -9,6 +10,7 @@ export default function App() {
   const [dataChannel, setDataChannel] = useState(null);
   const peerConnection = useRef(null);
   const audioElement = useRef(null);
+  const audioProcessor = useRef(new AudioProcessor());
 
   async function startSession() {
     try {
@@ -25,11 +27,14 @@ export default function App() {
       audioElement.current.autoplay = true;
       pc.ontrack = (e) => (audioElement.current.srcObject = e.streams[0]);
 
-      // Add local audio track for microphone input in the browser
-      const ms = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
-      pc.addTrack(ms.getTracks()[0]);
+      // Add local audio track with configured constraints
+      const ms = await navigator.mediaDevices.getUserMedia(
+        audioProcessor.current.getAudioConstraints()
+      );
+      const sender = pc.addTrack(ms.getTracks()[0]);
+      
+      // Set up audio transform if enabled
+      await audioProcessor.current.setupTransform(sender);
 
       // Set up data channel for sending and receiving events
       const dc = pc.createDataChannel("oai-events");
@@ -122,7 +127,19 @@ export default function App() {
     if (dataChannel) {
       // Append new server events to the list
       dataChannel.addEventListener("message", (e) => {
-        setEvents((prev) => [JSON.parse(e.data), ...prev]);
+        const event = JSON.parse(e.data);
+        
+        // Handle response boundaries for audio effects
+        if (audioProcessor.current.isEnabled) {
+          if (event.type === "response.created") {
+            audioProcessor.current.playStartEffects?.();
+          }
+          if (event.type === "response.audio.done") {
+            audioProcessor.current.playEndEffects?.();
+          }
+        }
+        
+        setEvents((prev) => [event, ...prev]);
       });
 
       // Set session active when the data channel is opened
