@@ -1,4 +1,7 @@
 {
+  "name": "trooper-dev",
+  "version": "1.0.0",
+  "description": "Stormtrooper voice effect implementation for OpenAI Realtime API",
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
@@ -17,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
-    "react-router-dom": "^6.20.0"
+    "react-router-dom": "^6.20.0",
+    "standardized-audio-context": "^25.3.66"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
@@ -25,6 +29,11 @@
     "postcss-nesting": "^12.0.2",
     "postcss-preset-env": "^7.7.1",
     "tailwindcss": "^3.4.1",
-    "vite": "^5.0.2"
+    "vite": "^5.0.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
